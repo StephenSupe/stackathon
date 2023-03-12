@@ -1,51 +1,57 @@
-import React from "react";
 import { MeshReflectorMaterial } from "@react-three/drei";
-import { useLoader } from "@react-three/fiber";
-import { useEffect } from "react";
+import { useFrame, useLoader } from "@react-three/fiber";
+import React, { useEffect } from "react";
 import { LinearEncoding, RepeatWrapping, TextureLoader } from "three";
 
 export function Ground() {
     const [roughness, normal] = useLoader(TextureLoader, [
-        process.env.PUBLIC_URL + "textures/roughness.jpg",
-        process.env.PUBLIC_URL + "textures/normal.jpg",
+      process.env.PUBLIC_URL + "textures/roughness.jpg",
+      process.env.PUBLIC_URL + "textures/normal.jpg",
     ]);
-
     //set some properties for the textures for the ground (normal/roughness)
     //textures will repeat 5 times in both directions Horizontally and Vertically
     //ensure textures properties are set correctly everytime textures are updated
     useEffect(() => {
-        [normal, roughness].forEach((texture) => {
-            texture.wrapS = RepeatWrapping;
-            texture.wrapT = RepeatWrapping;
-            texture.repeat.set(5, 5);
-            texture.offset.set(0, 0);
-        });
-        //encoding to the normal texture to make it look more realistic in a linear color space
-        normal.encoding = LinearEncoding;
+      [normal, roughness].forEach((t) => {
+        t.wrapS = RepeatWrapping;
+        t.wrapT = RepeatWrapping;
+        t.repeat.set(5, 5);
+        t.offset.set(0, 0);
+      });
+    //encoding to the normal texture to make it look more realistic in a linear color space
+      normal.encoding = LinearEncoding;
     }, [normal, roughness]);
-
-  return (
-    <mesh rotation-x={-Math.PI * 5} castShadow receiveShadow>
-      <planeGeometry args={[30, 30]} />
-      <MeshReflectorMaterial
-        envMapIntensity={0}
-        dithering={true}
-        color={[0.015, 0.015, 0.015]}
-        normalScale={[0.15, 0.15]}
-        roughness={0.7}
-        blur={[1000, 400]}// Blur ground reflections (width, heigt), 0 skips blur
-        mixBlur={30}// How much blur mixes with surface roughness (default = 1)
-        mixStrength={80}// Strength of the reflections
-        mixContrast={1}// Contrast of the reflections
-        resolution={1024}// Off-buffer resolution, lower=faster, higher=better quality, slower
-        mirror={0}// Mirror environment, 0 = texture colors, 1 = pick up env colors
-        depthScale={0.01}// Scale the depth factor (0 = no depth, default = 0)
-        minDepthThreshold={0.9}// Lower edge for the depthTexture interpolation (default = 0)
-        maxDepthThreshold={1}// Upper edge for the depthTexture interpolation (default = 0)
-        depthToBlurRatioBias={0.25}// Adds a bias factor to the depthTexture before calculating the blur amount [blurFactor = blurTexture * (depthTexture + bias)]. It accepts values between 0 and 1, default is 0.25. An amount > 0 of bias makes sure that the blurTexture is not too sharp because of the multiplication with the depthTexture
-        debug={0}
-        reflectorOffset={0.2}
-         />
-    </mesh>
-  );
-}
+  
+    useFrame((state, delta) => {
+      let t = -state.clock.getElapsedTime() * 0.128;
+      roughness.offset.set(0, t % 1);
+      normal.offset.set(0, t % 1);
+    });
+  
+    return (
+      <mesh rotation-x={-Math.PI * 0.5} castShadow receiveShadow>
+        <planeGeometry args={[30, 30]} />
+        <MeshReflectorMaterial
+          envMapIntensity={0}
+          normalMap={normal}
+          normalScale={[0.15, 0.15]}
+          roughnessMap={roughness}
+          dithering={true}
+          color={[0.025, 0.025, 0.025]}
+          roughness={0.7}
+          blur={[1000, 400]}
+          mixBlur={30}
+          mixStrength={80}
+          mixContrast={1}
+          resolution={1024}
+          mirror={0}
+          depthScale={0.01}
+          minDepthThreshold={0.9}
+          maxDepthThreshold={1}
+          depthToBlurRatioBias={0.25}
+          debug={0}
+          reflectorOffset={0.2}
+        />
+      </mesh>
+    );
+  }

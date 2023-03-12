@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { Ground } from './Ground';
 import "./style.css";
+import { Spheres } from './Spheres';
 
 function CarShow() {
   return (
@@ -21,7 +22,7 @@ function CarShow() {
         castShadow
         shadow-bias={-0.0001}
       />
-      
+
       <spotLight
         color={[0.14, 0.5, 1]}
         intensity={2}
@@ -32,6 +33,7 @@ function CarShow() {
         shadow-bias={-0.0001}
       />
     <Ground />
+    <Spheres />
     </>
   )
 }
