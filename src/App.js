@@ -5,6 +5,8 @@ import { Ground } from './Ground';
 import "./style.css";
 import { Spheres } from './Spheres';
 import {Navbar} from './Navbar';
+import {Footer} from './Footer';
+import { Stars } from './Stars';
 
 function Show() {
   return (
@@ -25,6 +27,7 @@ function Show() {
       />
     <Ground />
     <Spheres />
+    <Stars count={1000} />
     </>
   )
 }
@@ -39,6 +42,9 @@ function App() {
         <Navbar />
         <h1>Welcome to my landing page</h1>
         <p>As a software engineer, I create cutting-edge software solutions to solve complex problems.</p>
+        <br></br>
+        <br></br>
+      <Footer />
       </div>
     </div>
   );

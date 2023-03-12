@@ -57,3 +57,21 @@ html, body, #root, canvas {
     color: #ffc107;
   }
   
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    padding: 10px;
+  }
+  
+  .icons {
+    display: flex;
+    justify-content: space-between;
+    width: 100px; /* Optional: adjust the width to control the spacing */
+  }
