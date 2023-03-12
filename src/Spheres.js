@@ -14,19 +14,24 @@ function Sphere({ color }) {
   const [emissive] = useState(() => color.map(c => c * 0.2));
 
   function getInitialPosition() {
-    let vector = new Vector3((Math.random() * 2 - 1) * 3, Math.random() * 2.5 + 0.1, (Math.random() * 2 - 1) * 15); 
-    if(vector.x < 0) vector.x -= 1.75;
-    if(vector.x > 0) vector.x += 1.75;
-
+    // Generate random x, y, and z coordinates within certain ranges
+    const x = Math.random() * 10 - 5;
+    const y = Math.random() * 5 + 2;
+    const z = Math.random() * 10 - 5;
+  
+    // Create a new Vector3 object with the random coordinates
+    const vector = new Vector3(x, y, z);
+  
     return vector;
   }
 
+  //resets the position of the spheres, so they don't all start at the same place 
   function resetPosition() {
-    let v = new Vector3((Math.random() * 2 - 1) * 3, Math.random() * 2.5 + 0.1, Math.random() * 10 + 10); 
-    if(v.x < 0) v.x -= 1.75;
-    if(v.x > 0) v.x += 1.75;
+    let vector = new Vector3((Math.random() * 2 - 1) * 3, Math.random() * 2.5 + 0.1, Math.random() * 10 + 10); 
+    if(vector.x < 0) vector.x -= 1.75;
+    if(vector.x > 0) vector.x += 1.75;
 
-    setPosition(v);
+    setPosition(vector);
   }
 
   useFrame(
@@ -48,8 +53,7 @@ function Sphere({ color }) {
       )
       sphere.current.rotation.x += delta * xRotSpeed;
       sphere.current.rotation.y += delta * yRotSpeed;
-    },
-    [xRotSpeed, yRotSpeed, position]
+    }, [xRotSpeed, yRotSpeed, position]
   );
 
   return (
@@ -59,7 +63,7 @@ function Sphere({ color }) {
       scale={scale}
       castShadow
     >
-      <sphereGeometry args={[0.5, 32, 32]} />
+      <sphereGeometry args={[0.5, 64, 64]} />
       <meshStandardMaterial color={color} metalness={metalness} roughness={roughness} emissive={emissive} envMapIntensity={0.15} />
     </mesh>
   );
@@ -68,7 +72,7 @@ function Sphere({ color }) {
 export function Spheres() {
   const [arr] = useState(() => {
     let SphereArray = [];
-    for(let i = 0; i < 20; i++) SphereArray.push(0);
+    for(let i = 0; i < 45; i++) SphereArray.push(0);
     return SphereArray;
   });
 

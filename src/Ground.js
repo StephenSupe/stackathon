@@ -5,8 +5,8 @@ import { LinearEncoding, RepeatWrapping, TextureLoader } from "three";
 
 export function Ground() {
     const [roughness, normal] = useLoader(TextureLoader, [
-      process.env.PUBLIC_URL + "textures/roughness.jpg",
-      process.env.PUBLIC_URL + "textures/normal.jpg",
+      process.env.PUBLIC_URL + "textures/rough1.jpg",
+      process.env.PUBLIC_URL + "textures/normal1.jpg",
     ]);
     //set some properties for the textures for the ground (normal/roughness)
     //textures will repeat 5 times in both directions Horizontally and Vertically
@@ -37,7 +37,7 @@ export function Ground() {
           normalScale={[0.15, 0.15]}
           roughnessMap={roughness}
           dithering={true}
-          color={[0.025, 0.025, 0.025]}
+          color={[0.05, 0.05, 0.05]}
           roughness={0.7}
           blur={[1000, 400]}
           mixBlur={30}

@@ -1,32 +1,23 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { Ground } from './Ground';
 import "./style.css";
 import { Spheres } from './Spheres';
+import {Navbar} from './Navbar';
 
-function CarShow() {
+function Show() {
   return (
     <>
-    < OrbitControls target={[0, 0.35, 0]} maxPolarAngle={1.45}/>
-    <PerspectiveCamera makeDefault fov ={50} position={[3, 2, 5]} />
+    <OrbitControls target={[0, 0.35, 0]} maxPolarAngle={1.45}/>
+    <PerspectiveCamera makeDefault fov ={75} position={[0, 5, 10]} />
 
-    <color args = {[0, 0, 0,]} attach="background" />
-
-    <spotLight
-        color={[1, 0.25, 0.7]}
-        intensity={1.5}
-        angle={0.6}
-        penumbra={0.5}
-        position={[5, 5, 0]}
-        castShadow
-        shadow-bias={-0.0001}
-      />
+    <color args={[0, 0, 0]} attach="background" />
 
       <spotLight
-        color={[0.14, 0.5, 1]}
-        intensity={2}
-        angle={0.6}
+        color={[0.15, 0.5, 1]}
+        intensity={3}
+        angle={1.6}
         penumbra={0.5}
         position={[-5, 5, 0]}
         castShadow
@@ -40,11 +31,16 @@ function CarShow() {
 
 function App() {
   return (
-    <Suspense fallback={null}>
+    <div className="container">
       <Canvas shadows>
-        <CarShow />
+        <Show />
       </Canvas>
-    </Suspense>
+      <div className="text">
+        <Navbar />
+        <h1>Welcome to my landing page</h1>
+        <p>As a software engineer, I create cutting-edge software solutions to solve complex problems.</p>
+      </div>
+    </div>
   );
 }
 
