@@ -6,7 +6,7 @@ import "./style.css";
 import { Spheres } from './Spheres';
 import {Navbar} from './Navbar';
 import {Footer} from './Footer';
-import { Stars } from './Stars';
+// import { Stars } from './Stars';
 
 function Show() {
   return (
@@ -27,7 +27,7 @@ function Show() {
       />
     <Ground />
     <Spheres />
-    <Stars count={1000} />
+    {/* <Stars count={1000} /> */}
     </>
   )
 }
